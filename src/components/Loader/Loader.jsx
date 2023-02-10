@@ -1,17 +1,15 @@
-import { ThreeDots } from 'react-loader-spinner';
-import './Loader.css';
+import { createPortal } from 'react-dom';
+import { Watch } from 'react-loader-spinner';
+
+import { Box } from './Louder.styled';
+
+const loaderRoot = document.querySelector('#loader-root');
 
 export default function Loader() {
-  return (
-    <div className="Spinner">
-      <ThreeDots
-        height="80"
-        width="80"
-        radius="9"
-        color="#000000"
-        ariaLabel="three-dots-loading"
-        visible={true}
-      />
-    </div>
+  return createPortal(
+    <Box>
+      <Watch type="Watch" color="#0fed1e" height={100} width={100} />
+    </Box>,
+    loaderRoot
   );
 }
