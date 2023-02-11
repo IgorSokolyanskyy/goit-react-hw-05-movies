@@ -1,34 +1,41 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
 import { fetchReviews } from '../../services/Api';
+import { Status } from 'constants/status';
 import { Item, P } from './Reviews.styled';
+
 import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErorrMessega/ErorrMessega';
 
 export default function Reviews() {
-  const [reviews, setReviews] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+  const [reviews, setReviews] = useState(null);
   const [error, setError] = useState(null);
+  const [status, setStatus] = useState(Status.IDLE);
 
   const { movieId } = useParams();
 
   useEffect(() => {
+    setStatus(Status.PENDING);
     const controller = new AbortController();
     const signal = controller.signal;
 
     const getData = async () => {
-      setLoading(true);
-
       try {
         const { results } = await fetchReviews(movieId, signal);
 
+        if (results.length === 0) {
+          alert("💩 We don't have any reviews for this movie.");
+          setStatus(Status.IDLE);
+          return;
+        }
+
         setReviews(results);
+        setStatus(Status.RESOLVED);
       } catch (error) {
         if (error.name === 'CanceledError') return;
 
-        setError(error);
-      } finally {
-        setLoading(false);
+        setError('Something went wrong. Try again.');
+        setStatus(Status.REJECTED);
       }
     };
 
@@ -41,9 +48,11 @@ export default function Reviews() {
 
   return (
     <div>
-      {isLoading && <Loader />}
+      {status === Status.PENDING && <Loader />}
 
-      {reviews.length ? (
+      {status === Status.REJECTED && <ErrorMessage message={error} />}
+
+      {status === Status.RESOLVED && (
         <ul>
           {reviews.map(({ id, author, content }) => (
             <Item key={id}>
@@ -56,31 +65,6 @@ export default function Reviews() {
             </Item>
           ))}
         </ul>
-      ) : (
-        <p
-          style={{
-            textAlign: 'center',
-            margin: 0,
-            fontSize: 32,
-            color: 'red',
-          }}
-        >
-          We don't have any reviews for this movie
-        </p>
-      )}
-
-      {error && (
-        <h2
-          style={{
-            textAlign: 'center',
-            color: 'red',
-            marginTop: 0,
-            marginBottom: 25,
-            fontSize: 44,
-          }}
-        >
-          The service is temporarily unavailable. Please try again later.
-        </h2>
       )}
     </div>
   );

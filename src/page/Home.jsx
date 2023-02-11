@@ -1,31 +1,31 @@
 import { useState, useEffect } from 'react';
-import MovieList from '../components/MovieList/MovieList';
-
-import Loader from '../components/Loader/Loader';
 import { fetchTrendsMovies } from '../services/Api';
+import MovieList from '../components/MovieList/MovieList';
+import { Status } from '../constants/status';
+import Loader from '../components/Loader/Loader';
+import ErorrMessega from '../components/ErorrMessega/ErorrMessega';
 
 export default function HomePage() {
-  const [trends, setTrends] = useState([]);
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [trends, setTrends] = useState(null);
+  const [error, setError] = useState(null);
+  const [status, setStatus] = useState(Status.IDLE);
 
   useEffect(() => {
+    setStatus(Status.PENDING);
     const controller = new AbortController();
     const signal = controller.signal;
 
     const fetchData = async () => {
-      setLoading(true);
-
       try {
         const movies = await fetchTrendsMovies(signal);
 
         setTrends(movies);
+        setStatus(Status.RESOLVED);
       } catch (error) {
         if (error.name === 'CanceledError') return;
 
-        setError(error);
-      } finally {
-        setLoading(false);
+        setError('Something went wrong. Try again.');
+        setStatus(Status.REJECTED);
       }
     };
 
@@ -49,23 +49,11 @@ export default function HomePage() {
         Trending today
       </h1>
 
-      {trends && <MovieList movies={trends} />}
+      {status === Status.PENDING && <Loader />}
 
-      {error && (
-        <h2
-          style={{
-            textAlign: 'center',
-            color: 'red',
-            marginTop: 0,
-            marginBottom: 25,
-            fontSize: 44,
-          }}
-        >
-          The service is temporarily unavailable. Please try again later.
-        </h2>
-      )}
+      {status === Status.REJECTED && <ErorrMessega message={error} />}
 
-      {isLoading && <Loader />}
+      {status === Status.RESOLVED && <MovieList movies={trends} />}
     </main>
   );
 }

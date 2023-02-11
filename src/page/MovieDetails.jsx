@@ -1,15 +1,16 @@
 import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieById } from '../services/Api';
-
+import { Status } from '../constants/status';
+import ErorrMessega from '../components/ErorrMessega/ErorrMessega';
 import Loader from '../components/Loader/Loader';
 import BackLink from '../components/BackLink/BackLink';
 import Movie from 'components/Movie/Movie';
 
 export default function MovieDetails() {
   const [movie, setMovie] = useState(null);
-  const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [status, setStatus] = useState(Status.IDLE);
 
   const { movieId } = useParams();
 
@@ -17,22 +18,22 @@ export default function MovieDetails() {
   const backLinkHref = navigate.state?.from ?? '/';
 
   useEffect(() => {
+    setStatus(Status.PENDING);
+
     const controller = new AbortController();
     const signal = controller.signal;
 
     const getData = async () => {
-      setLoading(true);
-
       try {
         const result = await fetchMovieById(movieId, signal);
 
         setMovie(result);
+        setStatus(Status.RESOLVED);
       } catch (error) {
         if (error.name === 'CanceledError') return;
 
-        setError(error);
-      } finally {
-        setLoading(false);
+        setError('Something went wrong. Try again.');
+        setStatus(Status.REJECTED);
       }
     };
 
@@ -47,23 +48,12 @@ export default function MovieDetails() {
     <main>
       <BackLink to={backLinkHref}>Back to movies</BackLink>
 
-      {movie && <Movie movie={movie} />}
+      {status === Status.PENDING && <Loader />}
 
-      {isLoading && <Loader />}
+      {status === Status.REJECTED && <ErorrMessega message={error} />}
 
-      {error && (
-        <h2
-          style={{
-            textAlign: 'center',
-            color: 'red',
-            marginTop: 0,
-            marginBottom: 25,
-            fontSize: 44,
-          }}
-        >
-          The service is temporarily unavailable. Please try again later.
-        </h2>
-      )}
+      {status === Status.RESOLVED && <Movie movie={movie} />}
+
       <Suspense fallback={<div>serergter</div>}>
         <Outlet />
       </Suspense>
