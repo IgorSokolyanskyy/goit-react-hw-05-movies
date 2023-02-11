@@ -11,6 +11,7 @@ export default function Reviews() {
   const [reviews, setReviews] = useState(null);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
+  const [scroll, setScroll] = useState(0);
 
   const { movieId } = useParams();
 
@@ -30,6 +31,7 @@ export default function Reviews() {
         }
 
         setReviews(results);
+        setScroll(document.documentElement.scrollHeight);
         setStatus(Status.RESOLVED);
       } catch (error) {
         if (error.name === 'CanceledError') return;
@@ -45,6 +47,16 @@ export default function Reviews() {
       controller.abort();
     };
   }, [movieId]);
+
+  useEffect(() => {
+    if (!scroll) {
+      return;
+    }
+    window.scrollTo({
+      top: scroll - 260,
+      behavior: 'smooth',
+    });
+  }, [scroll]);
 
   return (
     <div>

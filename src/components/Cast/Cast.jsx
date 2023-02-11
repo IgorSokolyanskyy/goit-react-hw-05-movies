@@ -12,6 +12,7 @@ export default function Cast() {
   const [actors, setActors] = useState(null);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
+  const [scroll, setScroll] = useState(0);
 
   const { movieId } = useParams();
 
@@ -31,6 +32,7 @@ export default function Cast() {
         }
 
         setActors(cast);
+        setScroll(document.documentElement.scrollHeight);
         setStatus(Status.RESOLVED);
       } catch (error) {
         if (error.name === 'CanceledError') return;
@@ -46,6 +48,16 @@ export default function Cast() {
       controller.abort();
     };
   }, [movieId]);
+
+  useEffect(() => {
+    if (!scroll) {
+      return;
+    }
+    window.scrollTo({
+      top: scroll - 240,
+      behavior: 'smooth',
+    });
+  }, [scroll]);
 
   const BASE_URL = 'https://image.tmdb.org/t/p/w500/';
 
