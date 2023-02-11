@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { fetchCast } from '../../services/Api';
 import { useParams } from 'react-router-dom';
+import { Status } from 'constants/status';
 import { List, Img, Item, P } from './Cast.styled';
 
 import noPhoto from 'images/noPhoto.jpg';
 import Loader from '../Loader/Loader';
-import { Status } from 'constants/status';
 import ErrorMessage from '../ErorrMessega/ErorrMessega';
 
 export default function Cast() {
