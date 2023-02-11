@@ -54,7 +54,7 @@ export default function MovieDetails() {
 
       {status === Status.RESOLVED && <Movie movie={movie} />}
 
-      <Suspense fallback={<div>serergter</div>}>
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
     </main>
