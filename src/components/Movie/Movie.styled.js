@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const Article = styled.article`
   display: flex;
@@ -17,4 +18,15 @@ export const Title = styled.h1`
 
 export const Img = styled.img`
   width: 350px;
+`;
+
+export const Subtitle = styled.h2`
+  display: flex;
+  justify-content: center;
+`;
+export const Link = styled(NavLink)`
+  display: inline-block;
+  font-size: 20px;
+  margin-left: 170px;
+  text-decoration: none;
 `;

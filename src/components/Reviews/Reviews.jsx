@@ -53,7 +53,7 @@ export default function Reviews() {
       return;
     }
     window.scrollTo({
-      top: scroll - 260,
+      top: scroll - 240,
       behavior: 'smooth',
     });
   }, [scroll]);
