@@ -25,8 +25,11 @@ export const Subtitle = styled.h2`
   justify-content: center;
 `;
 export const Link = styled(NavLink)`
-  display: inline-block;
   font-size: 20px;
-  margin-left: 170px;
+  color: blue;
   text-decoration: none;
+`;
+export const Nav = styled.div`
+  display: flex;
+  justify-content: space-evenly;
 `;

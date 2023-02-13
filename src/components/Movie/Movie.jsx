@@ -1,5 +1,13 @@
 import { useLocation } from 'react-router-dom';
-import { Article, MovieInfo, Title, Img, Subtitle, Link } from './Movie.styled';
+import {
+  Article,
+  MovieInfo,
+  Title,
+  Img,
+  Subtitle,
+  Link,
+  Nav,
+} from './Movie.styled';
 import noPhoto from 'images/noPhoto.jpg';
 import PropTypes from 'prop-types';
 
@@ -62,9 +70,8 @@ export default function Movie({ movie }) {
 
         <hr />
 
-        <div>
-          <Subtitle>Additional Information</Subtitle>
-
+        <Subtitle>Additional Information</Subtitle>
+        <Nav>
           <Link to="cast" state={{ from: backLinkHref }}>
             <p>Cast</p>
           </Link>
@@ -72,7 +79,7 @@ export default function Movie({ movie }) {
           <Link to="reviews" state={{ from: backLinkHref }}>
             <p>Reviews</p>
           </Link>
-        </div>
+        </Nav>
       </MovieInfo>
     </Article>
   );
