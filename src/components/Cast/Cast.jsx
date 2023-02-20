@@ -3,7 +3,8 @@ import { fetchCast } from '../../services/Api';
 import { useParams } from 'react-router-dom';
 import { Status } from 'constants/status';
 import { List, Img, Item, P } from './Cast.styled';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import noPhoto from 'images/noPhoto.jpg';
 import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErorrMessega/ErorrMessega';
@@ -26,7 +27,7 @@ export default function Cast() {
         const { cast } = await fetchCast(movieId, signal);
 
         if (cast.length === 0) {
-          alert('💩 No results!');
+          toast('💩 No results!', { autoClose: 3000 });
           setStatus(Status.IDLE);
           return;
         }
@@ -85,6 +86,8 @@ export default function Cast() {
           ))}
         </List>
       )}
+
+      <ToastContainer rtl />
     </div>
   );
 }

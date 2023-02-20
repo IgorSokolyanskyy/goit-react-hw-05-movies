@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Search, Form, Button, Input, Icon } from './SearchBox.styled';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 
 export default function SearchBox({ onSubmit }) {
@@ -14,7 +15,7 @@ export default function SearchBox({ onSubmit }) {
     e.preventDefault();
 
     if (!inputSearch.trim()) {
-      return alert('Please, enter a name');
+      return toast('Please, enter a name', { autoClose: 3000 });
     }
 
     onSubmit(inputSearch);
@@ -38,6 +39,8 @@ export default function SearchBox({ onSubmit }) {
           <Icon />
         </Button>
       </Form>
+
+      <ToastContainer rtl />
     </Search>
   );
 }

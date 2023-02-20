@@ -6,6 +6,8 @@ import ErorrMessega from '../components/ErorrMessega/ErorrMessega';
 import Loader from '../components/Loader/Loader';
 import MovieList from '../components/MovieList/MovieList';
 import SearchBox from '../components/SearchBox/SearchBox';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Movies() {
   const [movies, setMovies] = useState(null);
@@ -24,7 +26,7 @@ export default function Movies() {
         const results = await fetchMoviesBySearch(movieName);
 
         if (results.length === 0) {
-          alert('Nothing found 🙄');
+          toast('Nothing found 🙄', { autoClose: 3000 });
           setStatus(Status.IDLE);
           return;
         }
@@ -54,6 +56,8 @@ export default function Movies() {
       {status === Status.REJECTED && <ErorrMessega message={error} />}
 
       {status === Status.RESOLVED && <MovieList movies={movies} />}
+
+      <ToastContainer rtl />
     </main>
   );
 }

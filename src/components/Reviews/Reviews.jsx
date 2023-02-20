@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { fetchReviews } from '../../services/Api';
 import { Status } from 'constants/status';
 import { Item, P } from './Reviews.styled';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErorrMessega/ErorrMessega';
 
@@ -25,7 +26,10 @@ export default function Reviews() {
         const { results } = await fetchReviews(movieId, signal);
 
         if (results.length === 0) {
-          alert("💩 We don't have any reviews for this movie.");
+          toast(' We dont have any reviews for this movie 💩', {
+            autoClose: 3000,
+          });
+
           setStatus(Status.IDLE);
           return;
         }
@@ -78,6 +82,8 @@ export default function Reviews() {
           ))}
         </ul>
       )}
+
+      <ToastContainer rtl />
     </div>
   );
 }
