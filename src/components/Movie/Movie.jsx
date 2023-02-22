@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
+
+import noPhoto from 'images/noPhoto.jpg';
 import {
   Article,
   MovieInfo,
@@ -8,8 +11,6 @@ import {
   Link,
   Nav,
 } from './Movie.styled';
-import noPhoto from 'images/noPhoto.jpg';
-import PropTypes from 'prop-types';
 
 export default function Movie({ movie }) {
   const {

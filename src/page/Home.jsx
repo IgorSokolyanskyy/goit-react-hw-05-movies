@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { fetchTrendsMovies } from '../services/Api';
-import MovieList from '../components/MovieList/MovieList';
-import { Status } from '../constants/status';
-import Loader from '../components/Loader/Loader';
-import ErorrMessega from '../components/ErorrMessega/ErorrMessega';
+
+import { fetchTrendsMovies } from 'services/Api';
+import { Status } from 'constants/status';
+import MovieList from 'components/MovieList';
+import Loader from 'components/Loader';
+import ErorrMessega from 'components/ErorrMessega';
 
 export default function HomePage() {
   const [trends, setTrends] = useState(null);

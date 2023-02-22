@@ -1,7 +1,9 @@
-import MoviePreview from '../MoviePreview/MoviePreview';
-import { useLocation } from 'react-router-dom';
-import { Item, List, StyledLink } from './MovieList.styled';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
+
+import MoviePreview from 'components/MoviePreview';
+
+import { Item, List, StyledLink } from './MovieList.styled';
 
 export default function MovieList({ movies }) {
   const navigate = useLocation();

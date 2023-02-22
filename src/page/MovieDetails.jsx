@@ -1,11 +1,12 @@
 import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { useState, useEffect, Suspense } from 'react';
-import { fetchMovieById } from '../services/Api';
-import { Status } from '../constants/status';
-import ErorrMessega from '../components/ErorrMessega/ErorrMessega';
-import Loader from '../components/Loader/Loader';
-import BackLink from '../components/BackLink/BackLink';
-import Movie from 'components/Movie/Movie';
+
+import { fetchMovieById } from 'services/Api';
+import { Status } from 'constants/status';
+import ErorrMessega from 'components/ErorrMessega';
+import Loader from 'components/Loader';
+import BackLink from 'components/BackLink';
+import Movie from 'components/Movie';
 
 export default function MovieDetails() {
   const [movie, setMovie] = useState(null);

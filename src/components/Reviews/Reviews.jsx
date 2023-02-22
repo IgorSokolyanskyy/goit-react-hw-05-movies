@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchReviews } from '../../services/Api';
-import { Status } from 'constants/status';
-import { Item, P } from './Reviews.styled';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loader from '../Loader/Loader';
-import ErrorMessage from '../ErorrMessega/ErorrMessega';
+
+import { fetchReviews } from 'services/Api';
+import { Status } from 'constants/status';
+import ErrorMessage from 'components/ErorrMessega';
+import Loader from 'components/Loader';
+
+import { Item, P } from './Reviews.styled';
 
 export default function Reviews() {
   const [reviews, setReviews] = useState(null);

@@ -1,13 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { fetchMoviesBySearch } from '../services/Api';
-import { Status } from '../constants/status';
-import ErorrMessega from '../components/ErorrMessega/ErorrMessega';
-import Loader from '../components/Loader/Loader';
-import MovieList from '../components/MovieList/MovieList';
-import SearchBox from '../components/SearchBox/SearchBox';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { fetchMoviesBySearch } from 'services/Api';
+import { Status } from 'constants/status';
+import ErorrMessega from 'components/ErorrMessega';
+import Loader from 'components/Loader';
+import MovieList from 'components/MovieList';
+import SearchBox from 'components/SearchBox';
 
 export default function Movies() {
   const [movies, setMovies] = useState(null);

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
+
 import erorr404 from 'images/erorr404.jpg';
 import { Box, P } from './ErrorView.styled';
 

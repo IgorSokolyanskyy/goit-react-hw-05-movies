@@ -1,7 +1,7 @@
-import { Img, P } from './MoviePreview.styled';
-import noPhoto from 'images/noPhoto.jpg';
-
 import PropTypes from 'prop-types';
+
+import noPhoto from 'images/noPhoto.jpg';
+import { Img, P } from './MoviePreview.styled';
 
 export default function MoviePreview({ title, poster }) {
   const posterUrl = poster

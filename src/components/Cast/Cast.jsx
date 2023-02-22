@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
-import { fetchCast } from '../../services/Api';
 import { useParams } from 'react-router-dom';
-import { Status } from 'constants/status';
-import { List, Img, Item, P } from './Cast.styled';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { fetchCast } from 'services/Api';
+import { Status } from 'constants/status';
+import Loader from 'components/Loader';
+import ErrorMessage from 'components/ErorrMessega';
+
 import noPhoto from 'images/noPhoto.jpg';
-import Loader from '../Loader/Loader';
-import ErrorMessage from '../ErorrMessega/ErorrMessega';
+import { List, Img, Item, P } from './Cast.styled';
 
 export default function Cast() {
   const [actors, setActors] = useState(null);
